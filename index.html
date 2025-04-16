@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot Tư vấn Trung tâm</title>
+  <style>
+    body { font-family: Arial; background: #f2f2f2; padding: 20px; }
+    #chatbox { width: 100%; max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px #ccc; }
+    .message { margin: 10px 0; }
+    .user { text-align: right; color: blue; }
+    .bot { text-align: left; color: green; }
+  </style>
+</head>
+<body>
+  <div id="chatbox">
+    <div class="message bot">Xin chào! Tôi có thể hỗ trợ gì cho bạn? / Hello! How can I assist you today?</div>
+  </div>
+  <input type="text" id="userInput" placeholder="Nhập câu hỏi..." style="width:100%; padding:10px; margin-top:10px;">
+  <script>
+    const chatbox = document.getElementById('chatbox');
+    const userInput = document.getElementById('userInput');
+
+    userInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        const text = userInput.value;
+        if (!text.trim()) return;
+
+        addMessage(text, 'user');
+        userInput.value = '';
+        respond(text);
+      }
+    });
+
+    function addMessage(text, sender) {
+      const div = document.createElement('div');
+      div.className = 'message ' + sender;
+      div.innerText = text;
+      chatbox.appendChild(div);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function respond(text) {
+      let response = '';
+      const lower = text.toLowerCase();
+
+      if (lower.includes('học tiếng anh') || lower.includes('english course')) {
+        response = 'Chúng tôi cung cấp các khóa tiếng Anh giao tiếp và luyện thi IELTS. / We offer English communication and IELTS prep courses.';
+      } else if (lower.includes('du học') || lower.includes('study abroad')) {
+        response = 'Chúng tôi tư vấn du học tại Nhật, Hàn, Canada, và Úc. / We offer study abroad consultation for Japan, Korea, Canada, and Australia.';
+      } else if (lower.includes('xuất khẩu lao động') || lower.includes('work abroad')) {
+        response = 'Bạn quan tâm đến thị trường Nhật Bản, Hàn Quốc hay Đài Loan? / Are you interested in Japan, Korea, or Taiwan labor export?';
+      } else if (lower.includes('liên hệ') || lower.includes('contact')) {
+        response = 'Bạn có thể gọi đến 0123.456.789 hoặc để lại số điện thoại để chúng tôi liên hệ lại. / Call 0123.456.789 or leave your number for a callback.';
+      } else {
+        response = 'Xin lỗi, tôi chưa hiểu câu hỏi. Bạn có thể hỏi về khóa học, du học, xuất khẩu lao động hoặc liên hệ. / Sorry, I didn’t understand. Ask about courses, study abroad, labor export, or contact.';
+      }
+
+      setTimeout(() => addMessage(response, 'bot'), 500);
+    }
+  </script>
+</body>
+</html>
